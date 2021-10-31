@@ -78,7 +78,7 @@ def plot_2d_contour(surf_file, surf_name='train_loss', vmin=0.1, vmax=10, vlevel
     if show: plt.show()
 
 
-def plot_trajectory(proj_file, dir_file, show=False):
+def plot_trajectory(proj_file, dir_file, show=True):
     """ Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file), 'Projection file does not exist.'
