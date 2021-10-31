@@ -148,7 +148,7 @@ if __name__ == '__main__':
     parser.add_argument('--momentum', default=0.9, type=float)
     parser.add_argument('--epochs', default=300, type=int, metavar='N', help='number of total epochs to run')
     parser.add_argument('--save', default='trained_nets',help='path to save trained nets')
-    parser.add_argument('--save_epoch', default=10, type=int, help='save every save_epochs')
+    parser.add_argument('--save_epoch', default=1, type=int, help='save every save_epochs')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--rand_seed', default=0, type=int, help='seed for random num generator')
     parser.add_argument('--resume_model', default='', help='resume model from checkpoint')
@@ -194,7 +194,7 @@ if __name__ == '__main__':
     if not os.path.exists('trained_nets/' + save_folder):
         os.makedirs('trained_nets/' + save_folder)
 
-    f = open('trained_nets/' + save_folder + '/log.out', 'a', 0)
+    f = open('trained_nets/' + save_folder + '/log.out', 'w', 1)
 
     trainloader, testloader = dataloader.get_data_loaders(args)
 
