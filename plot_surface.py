@@ -59,11 +59,11 @@ def setup_surface_file(args, surf_file, dir_file):
     f['dir_file'] = dir_file
 
     # Create the coordinates(resolutions) at which the function is evaluated
-    xcoordinates = np.linspace(args.xmin, args.xmax, num=args.xnum)
+    xcoordinates = np.linspace(args.xmin, args.xmax, num=int(args.xnum))
     f['xcoordinates'] = xcoordinates
 
     if args.y:
-        ycoordinates = np.linspace(args.ymin, args.ymax, num=args.ynum)
+        ycoordinates = np.linspace(args.ymin, args.ymax, num=int(args.ynum))
         f['ycoordinates'] = ycoordinates
     f.close()
 
@@ -229,10 +229,10 @@ if __name__ == '__main__':
     # Check plotting resolution
     #--------------------------------------------------------------------------
     try:
-        args.xmin, args.xmax, args.xnum = [int(a) for a in args.x.split(':')]
+        args.xmin, args.xmax, args.xnum = [float(a) for a in args.x.split(':')]
         args.ymin, args.ymax, args.ynum = (None, None, None)
         if args.y:
-            args.ymin, args.ymax, args.ynum = [int(a) for a in args.y.split(':')]
+            args.ymin, args.ymax, args.ynum = [float(a) for a in args.y.split(':')]
             assert args.ymin and args.ymax and args.ynum, \
             'You specified some arguments for the y axis, but not all'
     except:
