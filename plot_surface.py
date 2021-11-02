@@ -23,6 +23,7 @@ import plot_1D
 import model_loader
 import scheduler
 import mpi4pytorch as mpi
+from prune import prune_weights
 
 def name_surface_file(args, dir_file):
     # skip if surf_file is specified in args
@@ -116,6 +117,10 @@ def crunch(surf_file, net, w, s, d, dataloader, loss_key, acc_key, comm, rank, a
         elif args.dir_type == 'states':
             net_plotter.set_states(net.module if args.ngpu > 1 else net, s, d, coord)
 
+        # Prune
+        if args.prune:
+            prune_weights(net, args.prune_method, args.prune_ratio)
+
         # Record the time to compute the loss value
         loss_start = time.time()
         loss, acc = evaluation.eval_loss(net, criterion, dataloader, args.cuda)
@@ -180,6 +185,9 @@ if __name__ == '__main__':
     parser.add_argument('--model_file2', default='', help='use (model_file2 - model_file) as the xdirection')
     parser.add_argument('--model_file3', default='', help='use (model_file3 - model_file) as the ydirection')
     parser.add_argument('--loss_name', '-l', default='crossentropy', help='loss functions: crossentropy | mse')
+    parser.add_argument('--prune', action='store_true', help='model is prunned')
+    parser.add_argument('--prune_method',default='l1', help='model prunning thechinique')
+    parser.add_argument('--prune_ratio',default=0.5, type=float, help='model prunning ratio')
 
     # direction parameters
     parser.add_argument('--dir_file', default='', help='specify the name of direction file, or the path to an eisting direction file')
